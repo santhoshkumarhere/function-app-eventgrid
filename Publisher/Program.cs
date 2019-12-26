@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.Azure.EventGrid;
 using Microsoft.Azure.EventGrid.Models;
 using Newtonsoft.Json;
@@ -8,7 +9,7 @@ namespace Publisher
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
 
             string topicEndpoint = "https://az-test-event.westus2-1.eventgrid.azure.net/api/events";
@@ -21,7 +22,7 @@ namespace Publisher
             TopicCredentials topicCredentials = new TopicCredentials(topicKey);
             EventGridClient client = new EventGridClient(topicCredentials);
 
-            client.PublishEventsAsync(topicHostname, GetEventsList()).GetAwaiter().GetResult();
+            await client.PublishEventsAsync(topicHostname, GetEventsList());
             Console.Write("Published events to Event Grid.");
 
             static IList<EventGridEvent> GetEventsList()
@@ -32,7 +33,7 @@ namespace Publisher
                     eventsList.Add(new EventGridEvent()
                     {
                         Id = Guid.NewGuid().ToString(),
-                        EventType = "Contoso.Items.ItemReceivedEvent",
+                        EventType = "event-http-test",
                         Data = new ContosoItemReceivedEventData()
                         {
                             ItemSku = $"Dukati SKu {i}",
