@@ -36,7 +36,7 @@ namespace Publisher
                         EventType = "event-http-test",
                         Data = new ContosoItemReceivedEventData()
                         {
-                            ItemSku = $"Dukati SKu {i}",
+                            ItemSku = $"Mahindra HTTP {i}",
                             Model = 1998,
                             Color = "Red"
                         },
